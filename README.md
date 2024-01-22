@@ -1,6 +1,8 @@
 # Senior-Seminar---Zhou
 Senior Seminar
 
+ROUGH SUMMARIES
+
 1/16/24
 Approach: 
 (Simplified)
@@ -13,3 +15,17 @@ Approach:
 -Delete any uneeded/superflous classes
 
 [POSSIBLE OTHER APPROACH: Separate into main parts, minor parts]
+
+
+1/18/24
+-Github and git had problems with the imac so no github upload and fileio input not fully finished
+-Evaluated approach more and noticed that 5 classes for 5 time slots so genearlly, they should all be able to be fufilled
+-So new point popularity ranking is (5 points for 1, 4 points for 2, 3 points for 3, 2 points for 4, 1 point for 5)
+-(Not counting collisions of course)
+-Started with file.io and cleaning up data slightly
+
+1/22/24
+-Had some rough problems with vscode (however fixed, code runnable but commits need to be manual)
+-Separate seminar class created from tester class (fileio/constructor built out)
+-Creating data structures to store the data in a readable way
+-Further cleaning data
