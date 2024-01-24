@@ -29,3 +29,11 @@ Approach:
 -Separate seminar class created from tester class (fileio/constructor built out)
 -Creating data structures to store the data in a readable way
 -Further cleaning data
+
+1/24/24
+-Not full work time since there was a POP
+-However, I did lots of debugging for file IO and planning for the rest of the schedule
+-The popularity list should naturally include the most popular but given oveflow at all, duplicate classes will be taken for all
+-Then after the popularity list is generated, the duplicates will naturaly be ranked (in case of overflow) with the rest of the clases
+-Then take the top (25) classes (including duplicates) and then arrange them in a way which would avoid conflict (namely popular with unpopular)
+-Then after this process, arrange and place students (in the case a student can not be arranged place them randomly)
