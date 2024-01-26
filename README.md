@@ -37,3 +37,11 @@ Approach:
 -Then after the popularity list is generated, the duplicates will naturaly be ranked (in case of overflow) with the rest of the clases
 -Then take the top (25) classes (including duplicates) and then arrange them in a way which would avoid conflict (namely popular with unpopular)
 -Then after this process, arrange and place students (in the case a student can not be arranged place them randomly)
+
+1/26/24
+-Fixed the error within the fileio
+-Cleaned up the data significantly (deleted the course names from the spreadsheet because they were redundant due to the fact that the map of ints to coursenames was already 
+established and that the int course ids are already in the choice matrix)
+-Started the popularity ranking function (Created two array lists to map the course ids and the popularity index used to reference one another)
+-Created an iterator to run through choice matrix and calculate a value with the established weighting scale
+-At current progress, might need some time outside of class to fully finish
