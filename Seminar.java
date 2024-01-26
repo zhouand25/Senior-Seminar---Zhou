@@ -4,9 +4,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Seminar {
+
+    final int numClass = 5;
+    final int numTime = 5;
+    final int maxSize = 16;
+
     ArrayList<String> names = new ArrayList<String>();
     ArrayList<String> courses = new ArrayList<String>();
     ArrayList<int[]> choices = new ArrayList<int[]>();
+
+    ArrayList<Integer> rank = new ArrayList<Integer>();
+    ArrayList<Integer> coursevote = new ArrayList<Integer>();
 	
     public Seminar(String filename) {
 	//From w3schools
@@ -20,14 +28,13 @@ public class Seminar {
         //names
         names.add(array[2]);
         //courses
-        System.out.println("STUFF: "+array[16].charAt(0));
-        if(array[16].charAt(0)!=' ') {
-            courses.add(array[16]);
+        if(array[8].charAt(0)!=' ') {
+            courses.add(array[8]);
         }
         //choices
         int temp[] = new int[5];
         for(int i=0; i<5; ++i) {
-            String place = array[i+9];
+            String place = array[i+3];
             if(place.charAt(0)==' ') {
                 temp[i] = Integer.parseInt(place.substring(1,2));
             } else {
@@ -47,6 +54,22 @@ public class Seminar {
       System.out.println("An error occurred.");
       e.printStackTrace();
     } 
-	
+	popularRank();
 	}
+
+  public void popularRank() {
+     int numDup = numClass*numTime - courses.size();
+     for(int i=0; i<courses.size(); ++i) {
+        rank.add(i);
+        coursevote.add(0);
+     }
+     for(int i=0; i<courses.size(); ++i) {
+        for(int j=0; j<5; ++j) {
+          coursevote.set(choices.get(i)[j], coursevote.get(choices.get(i)[j])+(5-j));
+        }
+     }
+     for(int i=0; i<coursevote.size(); ++i) {
+      //Modulus 16*5
+     }
+  }
 }
