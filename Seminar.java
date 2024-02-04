@@ -18,16 +18,12 @@ public class Seminar {
   
     ArrayList<int[]> choices = new ArrayList<int[]>();
     int[][] actualSchedule = new int[names.size()][5];
-    for(int i=0; i<names.size(); ++i) {
-      for(int j=0; j<5; ++j) {
-        actualSchedule[i][j]=-1;
-      }
-    }
-
+    
     ArrayList<Integer> courseID = new ArrayList<Integer>();
     ArrayList<Integer> coursevote = new ArrayList<Integer>();
 
     public Seminar(String filename) {
+
       //From w3schools
       try {	
         //File Input
@@ -55,13 +51,23 @@ public class Seminar {
           }
         choices.add(temp);        
         }
-      
+        
+        /*
+        //PRINT 
         for(int i=0; i<choices.size(); ++i) {
           for(int j=0; j<5; ++j) {
             System.out.print(choices.get(i)[j]+" ");
           }
           System.out.println("");
         }
+        
+        for(int i=0; i<actualSchedule.length; ++i) {
+			for(int j=0; j<5; ++j) {
+				actualSchedule[i][j]=-1;
+			}
+		}
+		*/
+        
         s1.close();
     } catch (FileNotFoundException e) {
       System.out.println("An error occurred.");
@@ -73,7 +79,7 @@ public class Seminar {
   public void popularRank() {
      int numDup = numClass*numTime - courses.size();
      //Initialization of CourseID with 0,1,...n and creating n+1 elements in coursevote array list
-     for(int i=0; i<courses.size(); ++i) {
+     for(int i=0; i<courses.size()+1; ++i) {
         courseID.add(i);
         coursevote.add(0);
      }
@@ -84,22 +90,70 @@ public class Seminar {
           coursevote.set(choices.get(i)[j], coursevote.get(choices.get(i)[j])+(5-j));
         }
      }
-    //Uses modulus to create duplicates
+     //First slot is a buffer it is useless
+     coursevote.set(0, 0);
+     
+     /*
+     //PRINT
      for(int i=0; i<coursevote.size(); ++i) {
+		System.out.print(coursevote.get(i)+" ");
+	 }
+	 System.out.println(" ");
+	 for(int i=0; i<courseID.size(); ++i) {
+		System.out.print(courseID.get(i)+"  ");
+	 } */
+     
+    //Uses modulus to create duplicates
+    int length = coursevote.size();
+     for(int i=0; i<length; ++i) {
         if(coursevote.get(i)>80) {
-          coursevote.add(i-80);
+          coursevote.add(coursevote.get(i)-80);
           coursevote.set(i, 80);
-          courseId.add(i);
+          courseID.add(i);
         }
      }
+     //PRINT2
+     System.out.println("\n\n");
+      for(int i=0; i<coursevote.size(); ++i) {
+		System.out.print(coursevote.get(i)+" ");
+	 }
+	 System.out.println(" ");
+	 for(int i=0; i<courseID.size(); ++i) {
+		System.out.print(courseID.get(i)+"  ");
+	 }
+	 
+	 selectionSort();
+	 
+	 //PRINT3
+	  System.out.println("\n\n");
+      for(int i=0; i<coursevote.size(); ++i) {
+		System.out.print(coursevote.get(i)+" ");
+	 }
+	 System.out.println(" ");
+	 for(int i=0; i<courseID.size(); ++i) {
+		System.out.print(courseID.get(i)+"  ");
+	 }
+	 
+	 //PRINT4
+	 
+	 System.out.println("\n\n");
+	synthesis(courseID);
+    for(int i=0; i<numTime; ++i) {
+	  for(int j=0; j<numClass; ++j) {
+		 System.out.print(classSchedule[i][j]+" "); 
+	  }
+	  System.out.println(" ");
+    }
+	 
   }
 
+ 
   public void selectionSort() {
   //Selection sort sorts the coursevotes from largest to smallest (adjusts the courseID array in conjunction to maintain identifaction)
     for(int i=0; i<coursevote.size()-1; ++i) {
       int maxIndex=i;
       for(int j=i+1; j<coursevote.size(); ++j) {
-        if(coursevote.get(j)>course.get(maxIndex)) {
+        if(coursevote.get(j)>coursevote.get(maxIndex)) {
           maxIndex=j;
         }
       }
@@ -108,24 +162,67 @@ public class Seminar {
       coursevote.set(i, coursevote.get(maxIndex));
       coursevote.set(maxIndex, temp);
       //Now Swap courseIDs
-      courseID.set(i, maxIndex);
-      courseID.set(maxIndex, i);
+      temp = courseID.get(i);
+      courseID.set(i, courseID.get(maxIndex));
+      courseID.set(maxIndex, temp);
     }
+    //FIX NUM DUP PART
+    
+    
   }
 
   public void synthesis(ArrayList<Integer>ID) {
   //Places the courses with the most popular classes being paired with relatively unpopular classes
-    for(int i=0; i<numTimes; ++i) {
+    for(int i=0; i<numTime; ++i) {
       //Reserve classroom 1 for the most popular classes
       classSchedule[i][0] = ID.get(0);
       ID.remove(0);
-      for(int j=1; j<numClass; ++j) {
-        classSchedule[i][j] = ID.get(ID.size()-1);
-        ID.remove(ID.size()-1);
-      }
     }  
+    for(int i=0; i<numTime; ++i) {
+    for(int j=1; j<numClass; ++j) {
+      if(ID.size()==0) {
+		//Is a blank
+		ID.add(0);  
+      }
+      classSchedule[i][j] = ID.get(ID.size()-1);
+      ID.remove(ID.size()-1);
+    }
+	}
+	
+	//Small Optimization
+	//If there are the same type of classes that share the same bell, they are rearranged
+	
+	for(int i=0; i<numTime; ++i) {
+	  int dupIndex = findDup(classSchedule[i]);
+	  if(dupIndex!=-1) {
+		int switchIndex;
+		if(i==numTime-1) {
+		  switchIndex=i-1;
+		} else {
+		  switchIndex=i+1;	
+		}
+		//CONFIGURE SO USE LEFT IF POPULAR AND RIGHT IF UNPOPULAR
+        changeUp(i, switchIndex, dupIndex, classSchedule);
+	  }
+    }
+  }
+  public void changeUp(int original, int newIndex, int dup, int[][] schedule) {
+	  int[] test1 = schedule[original];
+	  int[] test2 = schedule[newIndex];
+	  
+	  if()
+	  while(!(findDup(test1)!=0  && findDup(test2)!=0)) {
+	
+	    int counter=0;	  
+	  }
+	  
+  }
+  
+  public int findDup(int[] input) {
+    //Returns the second duplicate index	  
   }
 
+/*
   public void placement() {
     //5 loops for the 5 selections
      ArrayList<Integer> priority;
@@ -224,5 +321,5 @@ public class Seminar {
   public void secondOptim() {
   //Special built-in optimization to switch to duplicate first class to optimize second class selection
     
-  }
+  } */
 }
