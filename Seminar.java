@@ -112,15 +112,15 @@ public class Seminar {
           courseID.add(i);
         }
      }
+     /*
      //PRINT2
-     System.out.println("\n\n");
       for(int i=0; i<coursevote.size(); ++i) {
 		System.out.print(coursevote.get(i)+" ");
 	 }
 	 System.out.println(" ");
 	 for(int i=0; i<courseID.size(); ++i) {
 		System.out.print(courseID.get(i)+"  ");
-	 }
+	 } */
 	 
 	 selectionSort();
 	 
@@ -192,8 +192,9 @@ public class Seminar {
 	//Small Optimization
 	//If there are the same type of classes that share the same bell, they are rearranged
 	
+	
 	for(int i=0; i<numTime; ++i) {
-	  int dupIndex = findDup(classSchedule[i]);
+	  int dupIndex = findDup(classSchedule[i]); 
 	  if(dupIndex!=-1) {
 		int switchIndex;
 		if(i==numTime-1) {
@@ -201,7 +202,6 @@ public class Seminar {
 		} else {
 		  switchIndex=i+1;	
 		}
-		//CONFIGURE SO USE LEFT IF POPULAR AND RIGHT IF UNPOPULAR
         changeUp(i, switchIndex, dupIndex, classSchedule);
 	  }
     }
@@ -210,16 +210,42 @@ public class Seminar {
 	  int[] test1 = schedule[original];
 	  int[] test2 = schedule[newIndex];
 	  
-	  if()
-	  while(!(findDup(test1)!=0  && findDup(test2)!=0)) {
-	
-	    int counter=0;	  
-	  }
 	  
+	  int counter;
+	  int increment;
+	  //CONFIGURE SO USE LEFT IF POPULAR AND RIGHT IF UNPOPULAR
+	  if(dup>2) {
+	    counter=5;
+	    increment=-1;
+	  } else {
+	    counter=0;
+	    increment=1;	  
+	  }
+	  while(!(findDup(test1)==-1 && findDup(test2)==-1)) {
+	     counter+=increment;
+	     int temp = test1[dup];
+	     test1[dup] = test2[counter];
+	     test2[counter] = temp;
+	  }
+	  classSchedule[original] = test1;
+	  classSchedule[newIndex] = test2; 
   }
   
   public int findDup(int[] input) {
-    //Returns the second duplicate index	  
+    int max=-1;
+    for(int i=0; i<input.length; ++i) {
+	  if(input[i]>max) {
+		max=input[i];  
+      }	
+    }
+    int[] map = new int[max+1];
+    for(int i=0; i<input.length; ++i) {
+	  if(map[input[i]]!=0) {
+	    return i;
+	  }
+	  map[input[i]]=1;
+	}
+	return -1;	  
   }
 
 /*
