@@ -78,7 +78,6 @@ public class Seminar {
   }
 
   public void popularRank() {
-     int numDup = numClass*numTime - courses.size();
      //Initialization of CourseID with 0,1,...n and creating n+1 elements in coursevote array list
      for(int i=0; i<courses.size()+1; ++i) {
         courseID.add(i);
@@ -149,6 +148,23 @@ public class Seminar {
     placement();
     
     //PRINT 5
+    System.out.println("ACTUAL SCHEDULE: ");
+    for(int i=0; i<names.size(); ++i) {
+	  for(int j=0; j<5; ++j) {
+	    System.out.print(actualSchedule[i][j]+" ");	  
+	  }	
+	  System.out.println(" ");
+    }
+    System.out.println("CLASS OCCUPANCY: ");
+    for(int i=0; i<numTime; ++i) {
+	  for(int j=0; j<numClass; ++j) {
+	    System.out.print(studentNumber[i][j]+" ");	  
+	  }	
+	  System.out.println(" ");
+	}
+	
+	wildcard();
+	//PRINT 6
     System.out.println("ACTUAL SCHEDULE: ");
     for(int i=0; i<names.size(); ++i) {
 	  for(int j=0; j<5; ++j) {
@@ -339,6 +355,9 @@ public class Seminar {
     
   }
   public int availability(int classID, int person) {
+	 if(classID==0) {
+	   return -1; 	 
+	 }
     ArrayList<Integer> list = new ArrayList<Integer>();
     ArrayList<Integer> col = new ArrayList<Integer>();
     //Stores the place or locations of the class on the schedule
@@ -397,8 +416,8 @@ public class Seminar {
     }
     return false;
   }
-
-public void wildcard() {
+  
+  public void wildcard() {
   //Special case if asking for class 0 then default actual schedule to -1
   //This loop covers each individual
   for(int i=0; i<actualSchedule.length; ++i) {
