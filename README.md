@@ -51,4 +51,6 @@ established and that the int course ids are already in the choice matrix)
 -Created sorted algorithm to sort rank of popularity
 -Created algorithm and function to place the classes accordingly most popular with less popular
 
+-ADDED IN "FREEBELLS" for classes that were not quite popular enough to really require duplicate sessions, this is to ease the strain on teachers and not have half-filled classrooms with sessions with low student interest students who were randomized into them
+
 
