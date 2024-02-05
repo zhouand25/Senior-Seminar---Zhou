@@ -45,3 +45,10 @@ established and that the int course ids are already in the choice matrix)
 -Started the popularity ranking function (Created two array lists to map the course ids and the popularity index used to reference one another)
 -Created an iterator to run through choice matrix and calculate a value with the established weighting scale
 -At current progress, might need some time outside of class to fully finish
+
+2/2
+-Finished popularity remainder thing that allows the duplicated classes to be added
+-Created sorted algorithm to sort rank of popularity
+-Created algorithm and function to place the classes accordingly most popular with less popular
+
+
