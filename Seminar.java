@@ -74,65 +74,18 @@ public class Seminar {
       System.out.println("An error occurred.");
       e.printStackTrace();
     } 
+    
   popularRank();
+  selectionSort();
+  
+  //PRINT 3
+  for(int i=0; i<coursevote.size(); ++i) {
+    System.out.print(coursevote.get(i)+" ");
   }
-
-  public void popularRank() {
-     //Initialization of CourseID with 0,1,...n and creating n+1 elements in coursevote array list
-     for(int i=0; i<courses.size()+1; ++i) {
-        courseID.add(i);
-        coursevote.add(0);
-     }
-    //Using weighting system to add choice matrix votes into coursevote arraylist
-     for(int i=0; i<choices.size(); ++i) {
-        for(int j=0; j<5; ++j) {
-          //Increments the choice value index by 5-j (dependent on index)
-          coursevote.set(choices.get(i)[j], coursevote.get(choices.get(i)[j])+(5-j));
-        }
-     }
-     //First slot is a buffer it is useless
-     coursevote.set(0, 0);
-     
-     /*
-     //PRINT
-     for(int i=0; i<coursevote.size(); ++i) {
-		System.out.print(coursevote.get(i)+" ");
-	 }
-	 System.out.println(" ");
-	 for(int i=0; i<courseID.size(); ++i) {
-		System.out.print(courseID.get(i)+"  ");
-	 } */
-     
-    //Uses modulus to create duplicates
-    int length = coursevote.size();
-     for(int i=0; i<length; ++i) {
-        if(coursevote.get(i)>80) {
-          coursevote.add(coursevote.get(i)-80);
-          coursevote.set(i, 80);
-          courseID.add(i);
-        }
-     }
-     /*
-     //PRINT2
-      for(int i=0; i<coursevote.size(); ++i) {
-		System.out.print(coursevote.get(i)+" ");
-	 }
-	 System.out.println(" ");
-	 for(int i=0; i<courseID.size(); ++i) {
-		System.out.print(courseID.get(i)+"  ");
-	 } */
-	 
-	 selectionSort();
-	 
-	 //PRINT3
-	  System.out.println("\n\n");
-      for(int i=0; i<coursevote.size(); ++i) {
-		System.out.print(coursevote.get(i)+" ");
-	 }
-	 System.out.println(" ");
-	 for(int i=0; i<courseID.size(); ++i) {
-		System.out.print(courseID.get(i)+"  ");
-	 }
+  System.out.println(" ");
+  for(int j=0; j<courseID.size(); ++j) {
+    System.out.print(courseID.get(j)+" ");	  
+  }
 	 
 	 //PRINT4
 	 
@@ -179,8 +132,36 @@ public class Seminar {
 	  }	
 	  System.out.println(" ");
 	}
-	 
   }
+
+  public void popularRank() {
+     //Initialization of CourseID with 0,1,...n and creating n+1 elements in coursevote array list
+     for(int i=0; i<courses.size()+1; ++i) {
+        courseID.add(i);
+        coursevote.add(0);
+     }
+    //Using weighting system to add choice matrix votes into coursevote arraylist
+     for(int i=0; i<choices.size(); ++i) {
+        for(int j=0; j<5; ++j) {
+          //Increments the choice value index by 5-j (dependent on index)
+          coursevote.set(choices.get(i)[j], coursevote.get(choices.get(i)[j])+(5-j));
+        }
+     }
+     //First slot is a buffer it is useless
+     coursevote.set(0, 0);
+     
+     
+    //Uses modulus to create duplicates
+    int length = coursevote.size();
+     for(int i=0; i<length; ++i) {
+        if(coursevote.get(i)>80) {
+          coursevote.add(coursevote.get(i)-80);
+          coursevote.set(i, 80);
+          courseID.add(i);
+        }
+     }
+
+ }
 
  
   public void selectionSort() {
@@ -200,13 +181,15 @@ public class Seminar {
       temp = courseID.get(i);
       courseID.set(i, courseID.get(maxIndex));
       courseID.set(maxIndex, temp);
-    }
-    //FIX NUM DUP PART
-    
-    
+    }    
   }
 
   public void synthesis(ArrayList<Integer>ID) {
+	ArrayList<Integer> copy = new ArrayList<Integer>();
+	for(int i=0; i<ID.size(); ++i) {
+	  copy.add(ID.get(i));	
+    }
+	
   //Places the courses with the most popular classes being paired with relatively unpopular classes
     for(int i=0; i<numTime; ++i) {
       //Reserve classroom 1 for the most popular classes
@@ -223,6 +206,38 @@ public class Seminar {
       ID.remove(ID.size()-1);
     }
 	}
+	if(courseID.size()<25) {
+	//Fill in procedure
+	  
+	  int pointer=0;
+	  
+		for(int i=0; i<numTime; ++i) {
+		  for(int j=0; j<numClass; ++j) {
+		    if(classSchedule[i][j]==0) {
+			  boolean condition=true;
+			  
+			  while(condition==true) {
+				 condition=false;
+			    for(int k=0; k<copy.size(); ++k) {
+				  if(k==pointer) {
+				    continue;	  
+				  }
+				  if(copy.get(pointer)==copy.get(k)) {
+				    condition=true;	
+				    ++pointer;  
+				    break;
+				  }	
+			    }	  
+			  }
+			  
+			  classSchedule[i][j]=copy.get(pointer);
+			  ++pointer;
+			  
+			}	  
+	      }	
+	    } 
+	}
+	
 	
 	//Small Optimization
 	//If there are the same type of classes that share the same bell, they are rearranged
@@ -424,19 +439,37 @@ public class Seminar {
     //This loops through each of the 5 time slots
     for(int j=0; j<5; ++j) {
       if(actualSchedule[i][j]==-1) {
+        ArrayList<Integer> canidates = new ArrayList<Integer>();
         //This loops over each of the classes within a time slot
-        //Class size balancing strategy
-        int min=0;
-        for(int k=1; k<5; ++k) {
-          if(studentNumber[j][k]<studentNumber[j][min]) {
-            min = k;
-          }
-        }
-        ++studentNumber[j][min];
-        actualSchedule[i][j]=min;
+        for(int k=0; k<5; ++k) {
+		  if(checker(actualSchedule[i], classSchedule[j][k]) && (studentNumber[j][k]!=16)) {
+             canidates.add(k);
+		  }	
+		}
+		int min=0;
+		for(int k=1; k<canidates.size(); ++k) {
+		  if(studentNumber[j][canidates.get(k)]<studentNumber[j][canidates.get(min)]) {
+		    min=k;	  
+		  }	
+	    }
+	    ++studentNumber[j][canidates.get(min)];
+        actualSchedule[i][j]=classSchedule[j][canidates.get(min)]; 
+
       }
     }
   }
+}
+
+public boolean checker(int[] own, int val) {
+  for(int i=0; i<own.length; ++i) {
+    if(own[i]==-1) {
+	  continue;
+	}
+    if(own[i]==val) {
+	  return false;
+    }	  
+  }	
+  return true;
 }
 
 }
