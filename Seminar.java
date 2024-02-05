@@ -78,6 +78,7 @@ public class Seminar {
   popularRank();
   selectionSort();
   
+  /*
   //PRINT 3
   for(int i=0; i<coursevote.size(); ++i) {
     System.out.print(coursevote.get(i)+" ");
@@ -85,10 +86,9 @@ public class Seminar {
   System.out.println(" ");
   for(int j=0; j<courseID.size(); ++j) {
     System.out.print(courseID.get(j)+" ");	  
-  }
+  } */
 	 
 	 //PRINT4
-	 
 	 System.out.println("\n\n");
 	synthesis(courseID);
     for(int i=0; i<numTime; ++i) {
@@ -100,6 +100,7 @@ public class Seminar {
     
     placement();
     
+    /*
     //PRINT 5
     System.out.println("ACTUAL SCHEDULE: ");
     for(int i=0; i<names.size(); ++i) {
@@ -114,7 +115,7 @@ public class Seminar {
 	    System.out.print(studentNumber[i][j]+" ");	  
 	  }	
 	  System.out.println(" ");
-	}
+	}*/
 	
 	wildcard();
 	//PRINT 6
@@ -132,6 +133,67 @@ public class Seminar {
 	  }	
 	  System.out.println(" ");
 	}
+	
+	System.out.println("TIME TABLE: ");
+	System.out.print("                          Classroom 1              Classroom 2                                                      ");
+    for(int i=2; i<numClass; ++i) {
+      System.out.print("Classroom "+(i+1)+"                                                                                        ");
+    }
+    System.out.println(" ");
+	for(int i=0; i<numTime; ++i) {
+      System.out.print("BLOCK               "+(i+1)+" ");
+	  for(int j=0; j<numClass; ++j) {
+	    System.out.print(courses.get(classSchedule[i][j]-1)+" ");	  
+	  }	
+	  System.out.println("\n\n");
+	}
+	
+	
+	
+	/* while (true) {
+	  System.out.println("Type 1 to see the full roster for every session, Type 2 to search via student, Type 3 to escape");
+      Scanner s1 = new Scanner(System.in);	
+      int mode = s1.nextInt();
+      System.out.println("HELLLOO");
+      if(mode==3) {
+	    break;	  
+	  } */
+	  int mode = 1;
+	  if(mode==1) {
+		ArrayList<ArrayList<String>> allname = new ArrayList<ArrayList<String>>();
+        for(int i=0; i<25; ++i) {
+		  allname.add(new ArrayList<String>());	
+	    } 
+		for(int i=0; i<actualSchedule.length; ++i) {
+		  for(int j=0; j<5; ++j) {
+		    int col = converter(j, actualSchedule[i][j]);
+		    allname.get(4*j + col).add(names.get(i));	  
+		  }	
+		}
+		for(int i=0; i<numTime; ++i) {
+			System.out.println("BLOCK "+(i+1));
+		  for(int j=0; j<numClass; ++j) {
+		    System.out.println("\nCourse: "+courses.get(actualSchedule[i][j])); 	  
+		    for(int k=0; k<allname.get(4*i + j).size(); ++k) {
+		       System.out.println(allname.get(4*i + j).get(k));	  
+	         }
+		  }	
+
+	    }
+		  
+	  }
+		
+   // } 
+	
+  }
+  
+  public int converter(int time, int ID) {
+    for(int i=0; i<5; ++i) {
+	  if(classSchedule[time][i]==ID) {
+	    return i;	  
+	  }	
+    }
+    return -1; 	  
   }
 
   public void popularRank() {
