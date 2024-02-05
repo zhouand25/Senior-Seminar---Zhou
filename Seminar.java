@@ -398,4 +398,26 @@ public class Seminar {
     return false;
   }
 
+public void wildcard() {
+  //Special case if asking for class 0 then default actual schedule to -1
+  //This loop covers each individual
+  for(int i=0; i<actualSchedule.length; ++i) {
+    //This loops through each of the 5 time slots
+    for(int j=0; j<5; ++j) {
+      if(actualSchedule[i][j]==-1) {
+        //This loops over each of the classes within a time slot
+        //Class size balancing strategy
+        int min=0;
+        for(int k=1; k<5; ++k) {
+          if(studentNumber[j][k]<studentNumber[j][min]) {
+            min = k;
+          }
+        }
+        ++studentNumber[j][min];
+        actualSchedule[i][j]=min;
+      }
+    }
+  }
+}
+
 }
