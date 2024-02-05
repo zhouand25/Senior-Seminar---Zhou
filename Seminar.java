@@ -14,7 +14,7 @@ public class Seminar {
     ArrayList<String> names = new ArrayList<String>();
     
     ArrayList<String> courses = new ArrayList<String>();
-    ArrayList<Integer> studentNumber = new ArrayList<Integer>();
+    int[][] studentNumber = new int[numTime][numClass];
   
     ArrayList<int[]> choices = new ArrayList<int[]>();
     int[][] actualSchedule;
@@ -68,10 +68,6 @@ public class Seminar {
 			}
 		}
 		
-		
-		for(int i=0; i<courses.size()+1; ++i) {
-			studentNumber.add(0);
-		}
         
         s1.close();
     } catch (FileNotFoundException e) {
@@ -153,13 +149,6 @@ public class Seminar {
     placement();
     
     //PRINT 5
-    System.out.println("CHOICE DONE OR COMPLETE");
-    for(int i=0; i<choices.size(); ++i) {
-		for(int j=0; j<5; ++j) {
-		  System.out.print(choices.get(i)[j]+" ");	
-	    }
-	    System.out.println(" ");
-    }
     System.out.println("ACTUAL SCHEDULE: ");
     for(int i=0; i<names.size(); ++i) {
 	  for(int j=0; j<5; ++j) {
@@ -167,6 +156,13 @@ public class Seminar {
 	  }	
 	  System.out.println(" ");
     }
+    System.out.println("CLASS OCCUPANCY: ");
+    for(int i=0; i<numTime; ++i) {
+	  for(int j=0; j<numClass; ++j) {
+	    System.out.print(studentNumber[i][j]+" ");	  
+	  }	
+	  System.out.println(" ");
+	}
 	 
   }
 
@@ -270,6 +266,8 @@ public class Seminar {
 	}
 	return -1;	  
   }
+  
+  // ---------------------------------------------------------------------------
 
 
   public void placement() {
@@ -316,7 +314,14 @@ public class Seminar {
                priority.add(priority.get(0));
              }
              //Increase enrollment number
-             studentNumber.set(choices.get(priority.get(0))[m], studentNumber.get(choices.get(priority.get(0))[m])+1);
+             int column=-1;
+             for(int k=0; k<5; ++k) {
+			   if(classSchedule[value][k]==choices.get(priority.get(0))[m]) {
+				 column=k;   
+			   }	 
+		     }
+		     ++studentNumber[value][column];
+             
              //Set the courseID in the appropriate time slot
              actualSchedule[priority.get(0)][value]=choices.get(priority.get(0))[m];
              //Set the choice thing to filled
@@ -335,27 +340,48 @@ public class Seminar {
   }
   public int availability(int classID, int person) {
     ArrayList<Integer> list = new ArrayList<Integer>();
+    ArrayList<Integer> col = new ArrayList<Integer>();
     //Stores the place or locations of the class on the schedule
     for(int i=0; i<numTime; ++i) {
       for(int j=0; j<numClass; ++j) {
         if(classSchedule[i][j]==classID) {
           //Store time slot only
           list.add(i);
+          col.add(j);
         }
       }
     }
 
-    //Check if the participant size is greater than 16
-    if(studentNumber.get(classID)==16) {
-      return -1;
-    }
+   ArrayList<Integer> score = new ArrayList<Integer>();
     //Check if there is a bell is compatible
+    //MINI OPTIMIZATION: If there are two options available pick 
     for(int i=0; i<list.size(); ++i) {
+		//Check if there is a spot open on the schedule
       if(actualSchedule[person][list.get(i)]==-1) {
+		    //Check if the participant size is greater than 16
+		if(studentNumber[list.get(i)][col.get(i)]==16) {
+		  list.remove(i);
+		  col.remove(i);
+		  continue;
+		}  
         //Returns the compatible time slot
-        return list.get(i);
-      }
+        score.add(studentNumber[list.get(i)][col.get(i)]);
+      } else {
+	    list.remove(i);
+	    col.remove(i);	  
+	  }
     }
+   if(score.size()==1) {
+	 return list.get(0);
+   }
+   if(score.size()==2) {
+	 if(score.get(0)<score.get(1)) {
+	   return list.get(0); 
+     } else {
+	   return list.get(1);	 
+	 }
+   }
+   
     return -1;
   }
     
