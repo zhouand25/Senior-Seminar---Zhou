@@ -18,9 +18,6 @@ public class Seminar {
   
     ArrayList<int[]> choices = new ArrayList<int[]>();
     int[][] actualSchedule;
-    
-    ArrayList<Integer> courseID = new ArrayList<Integer>();
-    ArrayList<Integer> coursevote = new ArrayList<Integer>();
 
     public Seminar(String filename) {
 
@@ -52,15 +49,6 @@ public class Seminar {
         choices.add(temp);        
         }
         
-        /*
-        //PRINT 
-        for(int i=0; i<choices.size(); ++i) {
-          for(int j=0; j<5; ++j) {
-            System.out.print(choices.get(i)[j]+" ");
-          }
-          System.out.println("");
-        }
-        */
         actualSchedule = new int[names.size()][5];
         for(int i=0; i<actualSchedule.length; ++i) {
 			for(int j=0; j<5; ++j) {
@@ -74,128 +62,11 @@ public class Seminar {
       System.out.println("An error occurred.");
       e.printStackTrace();
     } 
-    
-  popularRank();
-  selectionSort();
-  
-  /*
-  //PRINT 3
-  for(int i=0; i<coursevote.size(); ++i) {
-    System.out.print(coursevote.get(i)+" ");
-  }
-  System.out.println(" ");
-  for(int j=0; j<courseID.size(); ++j) {
-    System.out.print(courseID.get(j)+" ");	  
-  } */
-	 
-	 //PRINT4
-	 System.out.println("\n\n");
-	synthesis(courseID);
-    for(int i=0; i<numTime; ++i) {
-	  for(int j=0; j<numClass; ++j) {
-		 System.out.print(classSchedule[i][j]+" "); 
-	  }
-	  System.out.println(" ");
-    }
-    
-    placement();
-    
-    /*
-    //PRINT 5
-    System.out.println("ACTUAL SCHEDULE: ");
-    for(int i=0; i<names.size(); ++i) {
-	  for(int j=0; j<5; ++j) {
-	    System.out.print(actualSchedule[i][j]+" ");	  
-	  }	
-	  System.out.println(" ");
-    }
-    System.out.println("CLASS OCCUPANCY: ");
-    for(int i=0; i<numTime; ++i) {
-	  for(int j=0; j<numClass; ++j) {
-	    System.out.print(studentNumber[i][j]+" ");	  
-	  }	
-	  System.out.println(" ");
-	}*/
-	
-	wildcard();
-	//PRINT 6
-    System.out.println("ACTUAL SCHEDULE: ");
-    for(int i=0; i<names.size(); ++i) {
-	  for(int j=0; j<5; ++j) {
-	    System.out.print(actualSchedule[i][j]+" ");	  
-	  }	
-	  System.out.println(" ");
-    }
-    System.out.println("CLASS OCCUPANCY: ");
-    for(int i=0; i<numTime; ++i) {
-	  for(int j=0; j<numClass; ++j) {
-	    System.out.print(studentNumber[i][j]+" ");	  
-	  }	
-	  System.out.println(" ");
-	}
-	
-	System.out.println("TIME TABLE: ");
-	System.out.print("                          Classroom 1              Classroom 2                                                      ");
-    for(int i=2; i<numClass; ++i) {
-      System.out.print("Classroom "+(i+1)+"                                                                                        ");
-    }
-    System.out.println(" ");
-	for(int i=0; i<numTime; ++i) {
-      System.out.print("BLOCK               "+(i+1)+" ");
-	  for(int j=0; j<numClass; ++j) {
-	    System.out.print(courses.get(classSchedule[i][j]-1)+" ");	  
-	  }	
-	  System.out.println("\n\n");
-	}
-	
-	
-	
-	/* while (true) {
-	  System.out.println("Type 1 to see the full roster for every session, Type 2 to search via student, Type 3 to escape");
-      Scanner s1 = new Scanner(System.in);	
-      int mode = s1.nextInt();
-      System.out.println("HELLLOO");
-      if(mode==3) {
-	    break;	  
-	  } */
-	  int mode = 1;
-	  if(mode==1) {
-		ArrayList<ArrayList<String>> allname = new ArrayList<ArrayList<String>>();
-        for(int i=0; i<25; ++i) {
-		  allname.add(new ArrayList<String>());	
-	    } 
-		for(int i=0; i<actualSchedule.length; ++i) {
-		  for(int j=0; j<5; ++j) {
-		    int col = converter(j, actualSchedule[i][j]);
-		    allname.get(4*j + col).add(names.get(i));	  
-		  }	
-		}
-		for(int i=0; i<numTime; ++i) {
-			System.out.println("BLOCK "+(i+1));
-		  for(int j=0; j<numClass; ++j) {
-		    System.out.println("\nCourse: "+courses.get(actualSchedule[i][j])); 	  
-		    for(int k=0; k<allname.get(4*i + j).size(); ++k) {
-		       System.out.println(allname.get(4*i + j).get(k));	  
-	         }
-		  }	
-
-	    }
-		  
-	  }
-		
-   // } 
-	
-  }
-  
-  public int converter(int time, int ID) {
-    for(int i=0; i<5; ++i) {
-	  if(classSchedule[time][i]==ID) {
-	    return i;	  
-	  }	
-    }
-    return -1; 	  
   }
 
+
+  ArrayList<Integer> courseID = new ArrayList<Integer>();
+  ArrayList<Integer> coursevote = new ArrayList<Integer>();
   public void popularRank() {
      //Initialization of CourseID with 0,1,...n and creating n+1 elements in coursevote array list
      for(int i=0; i<courses.size()+1; ++i) {
@@ -211,9 +82,7 @@ public class Seminar {
      }
      //First slot is a buffer it is useless
      coursevote.set(0, 0);
-     
-     
-    //Uses modulus to create duplicates
+     //Uses modulus to create duplicates
     int length = coursevote.size();
      for(int i=0; i<length; ++i) {
         if(coursevote.get(i)>80) {
@@ -222,11 +91,8 @@ public class Seminar {
           courseID.add(i);
         }
      }
-
  }
-
- 
-  public void selectionSort() {
+ public void selectionSort() {
   //Selection sort sorts the coursevotes from largest to smallest (adjusts the courseID array in conjunction to maintain identifaction)
     for(int i=0; i<coursevote.size()-1; ++i) {
       int maxIndex=i;
@@ -245,6 +111,7 @@ public class Seminar {
       courseID.set(maxIndex, temp);
     }    
   }
+  
 
   public void synthesis(ArrayList<Integer>ID) {
 	ArrayList<Integer> copy = new ArrayList<Integer>();
@@ -316,6 +183,15 @@ public class Seminar {
 		}
         changeUp(i, switchIndex, dupIndex, classSchedule);
 	  }
+    }
+      //PRINT SCHEDULE
+	 System.out.println("\n\n");
+	 System.out.println("CLASS SCHEDULE: ");
+    for(int i=0; i<numTime; ++i) {
+	  for(int j=0; j<numClass; ++j) {
+		 System.out.print(classSchedule[i][j]+" "); 
+	  }
+	  System.out.println(" ");
     }
   }
   public void changeUp(int original, int newIndex, int dup, int[][] schedule) {
@@ -520,6 +396,21 @@ public class Seminar {
       }
     }
   }
+  //PRINT WILDCARD FILL INS
+    System.out.println("ACTUAL SCHEDULE: ");
+    for(int i=0; i<names.size(); ++i) {
+	  for(int j=0; j<5; ++j) {
+	    System.out.print(actualSchedule[i][j]+" ");	  
+	  }	
+	  System.out.println(" ");
+    }
+    System.out.println("CLASS OCCUPANCY: ");
+    for(int i=0; i<numTime; ++i) {
+	  for(int j=0; j<numClass; ++j) {
+	    System.out.print(studentNumber[i][j]+" ");	  
+	  }	
+	  System.out.println(" ");
+	}
 }
 
 public boolean checker(int[] own, int val) {
@@ -532,6 +423,132 @@ public boolean checker(int[] own, int val) {
     }	  
   }	
   return true;
+}
+
+ArrayList<ArrayList<String>> allname = new ArrayList<ArrayList<String>>();
+public void gather() {
+	//Initialize to size 25
+    for(int i=0; i<25; ++i) {
+	  allname.add(new ArrayList<String>());	
+	} 
+    for(int i=0; i<actualSchedule.length; ++i) {
+	//i represents the personID, while j represents the row of classSchedule
+	  for(int j=0; j<5; ++j) {
+		int col=-1;
+		
+		//checks the row on classSchedule
+		for(int k=0; k<5; ++k) {
+	      if(classSchedule[j][k]==actualSchedule[i][j]) {
+	        col = k;
+	      }	
+        }
+    
+		allname.get(5*j + col).add(names.get(i));	  
+	  }	
+    }  
+}
+
+public void finish() {
+		
+    //PRINT TIME TABLE
+	System.out.println("TIME TABLE: ");
+	System.out.print("                ");
+    for(int i=0; i<numClass; ++i) {
+      System.out.print("Classroom "+(i+1)+"                         ");
+    }
+    System.out.println(" ");
+	for(int i=0; i<numTime; ++i) {
+      System.out.print("BLOCK "+(i+1)+"       ");
+	  for(int j=0; j<numClass; ++j) {												              
+	    System.out.print(courses.get(classSchedule[i][j]-1).substring(0, 20)+"..."+"            ");	  
+	  }	
+	  System.out.println("\n\n");
+	}
+	
+    System.out.println("FULL COURSE NAMES:");
+	for(int i=0; i<courses.size(); ++i) {
+	  System.out.println("\n"+courses.get(i));	
+    }
+	
+	System.out.println("OUTPUT PANEL: ");
+	while (true) {
+      String mode=" ";
+	  System.out.println("\n\nType 0 to exit, Type 1 to get the full roster for all sessions, Type 2 to return roster of specific class, Type 3 to search for an individual's full schedule for the day");
+	  Scanner m1 = new Scanner(System.in);
+	  mode = m1.nextLine();	
+	  if(mode.equals("0")) {
+	    break;	  
+	  }
+	  if(mode.equals("1")) {
+	    for(int i=0; i<numTime; ++i) {
+		  for(int j=0; j<numClass; ++j) { 
+		    System.out.println("\n\nBLOCK"+(i+1)+"  |  Classroom "+(j+1));
+		    System.out.println("COURSE NAME: "+courses.get(classSchedule[i][j]-1));
+		    System.out.println("ROSTER");
+		    
+		    for(int k=0; k<allname.get(5*i + j).size(); ++k) {
+			  System.out.println(allname.get(5*i + j).get(k));
+		    }
+		    	  
+		  }	
+	    }	  
+		  
+	  }
+	  
+	  if(mode.equals("2")) {
+		System.out.print("\nTime Block of Class: ");
+	    Scanner m2 = new Scanner(System.in);
+	    int blockIndex = m2.nextInt()-1;
+	    System.out.print("Classroom Number of Class: ");
+	    Scanner m3 = new Scanner(System.in);
+	    int classIndex = m3.nextInt()-1;
+	    
+	    System.out.println("\nCOURSE NAME: "+courses.get(classSchedule[blockIndex][classIndex]-1));
+	    System.out.println("ROSTER");
+	    for(int i=0; i<allname.get(5*blockIndex + classIndex).size(); ++i) {
+	      System.out.println(allname.get(5*blockIndex + classIndex).get(i));
+	    }	  
+		  
+	  }
+	  
+	  
+	  if(mode.equals("3")) {
+		//reformatting names arrayList to get rid of bunch of trailing spaces 
+		for(int i=0; i<names.size(); ++i) {
+		  String initial = names.get(i);
+		  for(int j=1; j<initial.length(); ++j) {
+		    if(initial.substring(j-1, j).equals(" ") && initial.substring(j, j+1).equals(" ")) {
+			  names.set(i, initial.substring(0, j-1));	
+			  break;
+			}	  
+		  }	
+	    }  
+		  
+		 
+		System.out.print("\n\nName of Individual [Given first name (space) middle name or initial for those who submitted that way (space) last name]: ");
+	    Scanner m2 = new Scanner(System.in);
+        String name = m2.nextLine();
+	    System.out.println("\n CLASSES: ");
+	    for(int i=0; i<names.size(); ++i) {
+		  if(names.get(i).equals(name)) {
+		     for(int j=0; j<5; ++j) {
+			   System.out.print("\nTIME SLOT "+ (j+1)+"     |");
+			   int classNum=-1;
+			   for(int k=0; k<5; ++k) {
+				  if(classSchedule[j][k]==actualSchedule[i][j]) {
+				   classNum = k+1;	  
+				  }   
+			   }
+
+			   System.out.print("     CLASSROOM "+classNum+"     |     ");
+			   System.out.print("COURSE NAME: "+courses.get(actualSchedule[i][j]-1));	 
+			 }	  
+	      }	
+	    }	  
+	  }
+	  
+	}
+	
 }
 
 }
