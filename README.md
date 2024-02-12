@@ -87,9 +87,26 @@ Therefore, they will be placed in the wildcard which will place them in a random
 -Trying to implement and get minimum optization of class enrollemnt balance by placing the individual in a class with low number of participants
 
 2/5 
+-Started to fix a pretty big flaw in my code and scheduling
+-Originally, some of the classes were not popular enough leading to an overall number of sessions to be less than 25 (after duplication), so when creating a classSchedule, there would be some blank spots or free bells within the schedule, leading to an overall somewhat unoptimal set-up
+-So, I had to reconfigure a good portion of my program running a duplication-check algorithm to duplicate the next most popular classes that already have not been duplicated to fully fill in the schedule
+
+-Pretty much fully completed the course enrollment balance procedure
+-Created a scanner output panel that allows the user to input things via java.util.Scanner and create printed output based on roster information or individual information
+-However, currently the scanner device does not quite work and roster aggregation by session has not been completed (nor individual search)
 
 2/10
+-Cleaned up a lot of the code, deleted extra print functions and debugging tools
+-Finished implementation of user input and out 
+-Created finish and gather functions
+-Gather function gathers all of the individuals on the roster based on session ID, it loops through the actualSchedule which stores all of the courseIDs per time slot and adds them
+to the data structure that I have created called allname, which is a length 25 array of arraylists of strings, which is then printed to display the roster
+
+-There is a function which converts rows and columns to index on the arrayList 5*row + col is the index on the larger array which will store an arraylist of strings of names
+-Also, implemented individual searching, given an inputted name, the algorithm will search through the person array and find their corresponding index to then use it in the actualSchedule 2d matrix (with each of its elements holding a 5 element array 
+with index 0 being time slot 1, index 1 being time slot 2 and etc. In each cell, will hold the courseId which indicates what course it is) (Taking advantage of the fact there can not be duplicates within the same time slot, so column can be reverse-calculated/searched)
+
+-After the 2d matrix actual schedule is accessed, the courseID is pulled, crossed with the course array list to grab its full name, and then printed
 
 2/11
-
-
+-Rough clean up of code, deleting last print debugging statements
