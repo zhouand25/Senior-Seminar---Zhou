@@ -46,7 +46,7 @@ established and that the int course ids are already in the choice matrix)
 -Created an iterator to run through choice matrix and calculate a value with the established weighting scale
 -At current progress, might need some time outside of class to fully finish
 
-2/3 (Friday)
+2/3
 -Finished popularRank Function, iterates through the choices matrix [a two D array of size 5 arrays storing the top 5 choices of each student]
 -The function iterates through the function adding 5 for first vote, 4 for second vote, 3 for third vote and so on and adds them to a coursevote attribute of each course which measures its popularity
 -This popularity index is eventually used within the schedule creation as a heuristic to minimize collisions
@@ -66,6 +66,18 @@ established and that the int course ids are already in the choice matrix)
 -Created classSchedule 2d array data structure to store courseIds to represent the schedue with each cell representing a course in a specific class and time block
 
 2/4 
+-Finished implementing priority list (pretty much working)
+-Implemented auxillary function called availability that works in conjunction with the placement function
+-Availability function checks if that course in that time slot is "AVAILABLE" to the user, checking one if the course's enrollemnt number is <=16, and two makes sure that the person has an open unoccupied time slot to accomodate the course (returns a true or false boolean value)
+-LOTS OF OVERALL DEBUGGING
+
+-Also, found small problem in the synthesis function (where two of the same course, original and duplciate occur in the same time slot)
+-So, created a changeUp correction function where if it finds a duplicate with the findDup function, it attempts to exchange the duplicate class with one of the neighboring time bells to achieve a situation where both time slots are free of duplicate classes (as a teacher cannot teach in two classrooms at once)
+
+-More debugging with many printing functions to show the internal processes + small tweaks to debug and clean up the code
+-Helped fix the student enrollment variables, measuring number of students in a session
+
+-When doing that, decided to implement a mini-optimization in order to make things more convenient for teachers
 
 2/5 
 
