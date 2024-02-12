@@ -77,7 +77,14 @@ established and that the int course ids are already in the choice matrix)
 -More debugging with many printing functions to show the internal processes + small tweaks to debug and clean up the code
 -Helped fix the student enrollment variables, measuring number of students in a session
 
--When doing that, decided to implement a mini-optimization in order to make things more convenient for teachers
+-When doing that, decided to implement a mini-optimization in order to make things more convenient for teachers and to balance class sizes
+-For example, when a person has a option of being availble for both the main class and the duplicate class, the individual will pick teh class with lower class size
+-Balancing class sizes is very useful and is an overall optimization to the program because it not only allows the teachers to not have class sizes with 3 in one session and 16 in another (being inconvenient and strange), it also keeps more choices open and unfilled for individuals
+who are not available for both to have their option still open, ultimately improving the selection achievement rate
+
+-Implemented the wildcard function. Those who either have run out of choices (where one of them cannot be fufilled) or have some other collision or circumstance will have a blank space in their schedule which is not filled in (also applies to those who did not fill out the form),
+Therefore, they will be placed in the wildcard which will place them in a random class which is available to them in one of their open time slots.
+-Trying to implement and get minimum optization of class enrollemnt balance by placing the individual in a class with low number of participants
 
 2/5 
 
