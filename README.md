@@ -97,6 +97,8 @@ Therefore, they will be placed in the wildcard which will place them in a random
 
 2/10
 -Cleaned up a lot of the code, deleted extra print functions and debugging tools
+-Finished scanner code and device (deleted the closing part of the scanner, to allow scanner to be continually used)
+
 -Finished implementation of user input and out 
 -Created finish and gather functions
 -Gather function gathers all of the individuals on the roster based on session ID, it loops through the actualSchedule which stores all of the courseIDs per time slot and adds them
