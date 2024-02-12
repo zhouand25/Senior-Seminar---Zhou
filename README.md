@@ -1,6 +1,14 @@
 # Senior-Seminar---Zhou
 Senior Seminar
 
+GOAL: Given a file of people and courses along side choices of courses for each person, create a schedule and place the individualswith the given constraints:
+-There are 5 classrooms and 5 time slots in the seminar schedule
+-A classroom can hold max 16 students
+-An individual cannot participate in more than one course
+-A person's schedule should be filled with 5 classes/sessions
+-A course can be run at max twice
+-Minimize the collisions while maximizing the number of choices each person gets
+
 ROUGH SUMMARIES
 
 1/16/24
