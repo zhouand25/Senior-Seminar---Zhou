@@ -46,11 +46,31 @@ established and that the int course ids are already in the choice matrix)
 -Created an iterator to run through choice matrix and calculate a value with the established weighting scale
 -At current progress, might need some time outside of class to fully finish
 
-2/2
--Finished popularity remainder thing that allows the duplicated classes to be added
+2/3 (Friday)
+-Finished popularRank Function, iterates through the choices matrix [a two D array of size 5 arrays storing the top 5 choices of each student]
+-The function iterates through the function adding 5 for first vote, 4 for second vote, 3 for third vote and so on and adds them to a coursevote attribute of each course which measures its popularity
+-This popularity index is eventually used within the schedule creation as a heuristic to minimize collisions
+-Also the course duplication procedure is also implemented (within this function), the courses which have a great enough popularityIndex are copied and put into the course ArrayList as well
+
+-The second phase after the popular Rank function is the sorting algorithm which was also implemented
+-The sorting algorithm sorts the popularityIndex attribute of the various courses putting the most popular courses first and the less popular courses later in teh array
 -Created sorted algorithm to sort rank of popularity
 -Created algorithm and function to place the classes accordingly most popular with less popular
 
--ADDED IN "FREEBELLS" for classes that were not quite popular enough to really require duplicate sessions, this is to ease the strain on teachers and not have half-filled classrooms with sessions with low student interest students who were randomized into them
+-Also implemented the schedule creation procedure with the given last couple of functions
+-Puts the most popular courses with the least popular courses (uses the popularity sorted array) it first places the most popular courses and then goes to the back of the array List and places those courses on the same time slot/row
+
+-Began implementation for the student placement function, basically it doesn't go for the easy solution of placing one student's all 5 choices and moving on to the next student
+-It works by placing everyone's first choice and if a person's first choice fails, it picks their next best available option and puts them in a priority array list for them to get "priority" the next iteration in teh second selection and so on.
+
+-Created classSchedule 2d array data structure to store courseIds to represent the schedue with each cell representing a course in a specific class and time block
+
+2/4 
+
+2/5 
+
+2/10
+
+2/11
 
 
