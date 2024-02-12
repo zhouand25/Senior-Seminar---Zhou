@@ -114,4 +114,4 @@ with index 0 being time slot 1, index 1 being time slot 2 and etc. In each cell,
 -Lastly updated the tester class, with that main class acting as a "headquarters" and triggering the functions of seminar from that central station
 
 2/11
--Rough clean up of code, deleting last print debugging statements
+-Rough clean up of code, deleting last print debugging statements, finishing up comments
