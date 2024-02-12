@@ -9,7 +9,7 @@ import java.util.Scanner;
  * @since 2/11/24
  * @version 1.0.1
  * The Seminar class holds various methods, data structures, and variables which help to convert the file that the user provides to a schedule arrangement for the organizers of the event.
- * The file is processesd and reorganized and after various procedures and methods within the class, printed output will appear based on user input, accomplishing the goal of
+ * The file is processed and reorganized and after various procedures and methods within the class, printed output will appear based on user input, accomplishing the goal of
  * arranging a schedule while attempting to minimize collisions.
  */
 
